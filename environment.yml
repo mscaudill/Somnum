@@ -1,0 +1,16 @@
+# conda environment for somnum scripts 
+name: somnum
+dependencies:
+    - requests
+    - wget
+    - numpy
+    - scipy
+    - matplotlib
+    - ipython
+    - notebook
+    - psutil
+    - pytest
+    - pip
+    - pip:
+      - openseize
+

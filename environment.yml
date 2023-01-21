@@ -11,6 +11,9 @@ dependencies:
     - psutil
     - pytest
     - pip
+    - isort
+    - mypy
+    - pylint
     - pip:
       - openseize
 

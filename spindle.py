@@ -1,19 +1,20 @@
 """A collection of functions for working with spindle files."""
 
 import csv
+from pathlib import Path
+from typing import Sequence, Union
 
 import numpy as np
-
-from pathlib import Path
-from typing import Union, Sequence
+import numpy.typing as npt
 
 
-def read(fname: Union[str, Path], column: int, **kwargs):
+def read(fname: Union[str, Path], column: int, **kwargs
+) -> npt.NDArray:
     """Reads a SPINDLE sleep state CSV file into a 1-D numpy array
 
 
     Args:
-        fname: 
+        fname:
             A path to a SPINDLE file.
         column:
             The column of the file containing the sleep state.
@@ -30,10 +31,11 @@ def read(fname: Union[str, Path], column: int, **kwargs):
     return np.array([row[column] for row in row_reader])
 
 
-def as_mask(arr, states, fs, unit):
+def as_mask(arr: npt.NDArray, states: Sequence[str], fs: int, unit: int,
+) -> npt.NDArray:
     """Returns a 1-D boolean mask in samples from a 1-D array of spindle states
     in unit sized windows.
-    
+
     Args:
         arr:
             A 1-D array of all SPINDLE states.
@@ -71,7 +73,3 @@ def as_mask(arr, states, fs, unit):
         mask[slice(*samples)] = True
 
     return mask
-
-            
-        
-

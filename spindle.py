@@ -2,6 +2,8 @@
 
 import csv
 
+import numpy as np
+
 from pathlib import Path
 from typing import Union, Sequence
 
@@ -58,7 +60,9 @@ def as_mask(arr, states, fs, unit):
 
     # compute indices of transitions and reshape into start, stop sections
     transitions = np.diff(window_mask)
-    sections = np.flatnonzero(transtions).reshape(-1,2) + 1 #+1 for diff
+    sections = np.flatnonzero(transitions).reshape(-1,2) + 1 #+1 for diff
+    # be inclusive of last window
+    sections[:, -1] += 1
 
     # build a mask in sample units
     mask = np.zeros(len(arr) * fs * unit)
@@ -66,7 +70,7 @@ def as_mask(arr, states, fs, unit):
         samples = section * fs * unit
         mask[slice(*samples)] = True
 
-    return sections, mask
+    return mask
 
             
         
